@@ -1,1 +1,13 @@
+* {
+  font-family: 'Georgia', Verdana, sans-serif;
+}
 
+body {
+  margin: 0;
+}
+
+header {
+  display: flex;
+  padding: 5px;
+  background: #211b1c;
+}
