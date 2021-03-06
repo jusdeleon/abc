@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage'
 
 function App() {
   return (
-    <div className='App'>
+    <div className='App d-flex flex-column min-vh-100'>
       <Router>
         <Header />
         <HomePage />
