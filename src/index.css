@@ -42,3 +42,7 @@ header .logo h3 {
   margin: 2px;
   color: #d2cfc4;
 }
+
+.homepage {
+  flex: 1;
+}
