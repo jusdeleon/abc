@@ -6,19 +6,39 @@ body {
   margin: 0;
 }
 
+.App {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+footer h4,
+h5 {
+  margin: 0;
+  color: #d2cfc4;
+}
+
+footer {
+  display: flex;
+  padding: 10px 0;
+  flex-direction: column;
+  align-items: center;
+  background: #211b1c;
+}
+
 header {
   display: flex;
   padding: 5px;
   background: #211b1c;
 }
 
-.logo {
+header .logo {
   border: 3px solid #d2cfc4;
   margin: 0 20px;
   padding: 10px;
 }
 
-.logo h3 {
+header .logo h3 {
   margin: 2px;
   color: #d2cfc4;
 }
