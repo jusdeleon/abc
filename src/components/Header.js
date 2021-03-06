@@ -1,9 +1,11 @@
 const Header = () => {
-    return (
-        <header>
-            TEST
-        </header>
-    )
+  return (
+    <header>
+      <div className='logo'>
+        <h3>ABC Group</h3>
+      </div>
+    </header>
+  )
 }
 
 export default Header

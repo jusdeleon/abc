@@ -11,3 +11,14 @@ header {
   padding: 5px;
   background: #211b1c;
 }
+
+.logo {
+  border: 3px solid #d2cfc4;
+  margin: 0 20px;
+  padding: 10px;
+}
+
+.logo h3 {
+  margin: 2px;
+  color: #d2cfc4;
+}
