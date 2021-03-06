@@ -5,7 +5,7 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
   const onHandleShow = () => handleShow()
 
   return (
-    <Modal show={showModal} onHide={onHandleShow}>
+    <Modal show={showModal} onHide={onHandleShow} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Request a pass</Modal.Title>
       </Modal.Header>
