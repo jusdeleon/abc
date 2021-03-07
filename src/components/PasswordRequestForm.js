@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { passApi } from '../api/api'
 
 const PasswordRequestForm = ({ showModal, handleShow }) => {
   const onHandleShow = () => handleShow()
@@ -10,7 +11,7 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
     initialValues: {
       name: '',
       email: '',
-      confirmEmail: '',
+      email_confirmation: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -23,12 +24,12 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
       email: Yup.string()
         .email('Invalid email address')
         .required('Field is Required'),
-      confirmEmail: Yup.string()
+      email_confirmation: Yup.string()
         .oneOf([Yup.ref('email'), null], 'Email must match')
         .required('Field is required'),
     }),
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2))
+      passApi.post('/', values).then((res) => console.log(res.data.data))
       handleShow()
     },
   })
@@ -61,15 +62,18 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
               <div className='text-danger'>{formik.errors.email}</div>
             ) : null}
           </Form.Group>
-          <Form.Group controlId='confirmEmail'>
+          <Form.Group controlId='email_confirmation'>
             <Form.Label>Confirm Email</Form.Label>
             <Form.Control
               type='email'
               placeholder='Confirm Email'
-              {...formik.getFieldProps('confirmEmail')}
+              {...formik.getFieldProps('email_confirmation')}
             />
-            {formik.touched.confirmEmail && formik.errors.confirmEmail ? (
-              <div className='text-danger'>{formik.errors.confirmEmail}</div>
+            {formik.touched.email_confirmation &&
+            formik.errors.email_confirmation ? (
+              <div className='text-danger'>
+                {formik.errors.email_confirmation}
+              </div>
             ) : null}
           </Form.Group>
         </Modal.Body>
