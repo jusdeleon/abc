@@ -5,9 +5,9 @@ import * as Yup from 'yup'
 import Loader from './Loader'
 import { passApi } from '../api/api'
 
-const PasswordRequestForm = ({ showModal, handleShow }) => {
-  const [apiResponse, setApiResponse] = useState({})
+const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
   const [loading, setLoading] = useState(false)
+  const [apiErrors, setApiErrors] = useState({})
 
   const onHandleShow = () => handleShow()
 
@@ -32,18 +32,32 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
         .oneOf([Yup.ref('email'), null], 'Email must match')
         .required('Field is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       setLoading(true)
-      passApi.post('/', values).then((res) => {
-        setApiResponse(res.data.data)
-        setLoading(false)
-        onHandleShow()
-      })
+      passApi
+        .post('/', values)
+        .then((res) => {
+          setLoading(false)
+          onHandleShow()
+          handleSuccessModal()
+          resetForm()
+          setApiErrors({})
+        })
+        .catch((error) => {
+          setLoading(false)
+          setApiErrors(error.response.data)
+        })
     },
   })
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <Modal show={showModal} onHide={onHandleShow} animation={false}>
+      <Modal
+        show={showModal}
+        onHide={onHandleShow}
+        animation={false}
+        aria-labelledby='contained-modal-title-vcenter'
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Request a pass</Modal.Title>
         </Modal.Header>
@@ -84,6 +98,11 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
               </div>
             ) : null}
           </Form.Group>
+          {Object.keys(apiErrors).length > 0 ? (
+            <p className='text-danger'>
+              Error from server: {apiErrors.message}
+            </p>
+          ) : null}
         </Modal.Body>
         <Modal.Footer>
           <Button
