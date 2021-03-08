@@ -4,11 +4,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Dependencies
 
-react-router-dom
-react-bootstrap
-axios
-formik
-yup
+* react-router-dom
+* react-bootstrap
+* axios
+* formik
+* yup
+
+## Set up
+
+1. git clone https://github.com/myelsoria/abc.git
+2. npm install
+3. npm start
 
 ## Available Scripts
 
