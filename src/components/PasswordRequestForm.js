@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import Loader from './Loader'
 import { passApi } from '../api/api'
+import { passValidationSchema } from '../validator/passValidationSchema'
 
 const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
   const [loading, setLoading] = useState(false)
@@ -17,21 +17,7 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
       email: '',
       email_confirmation: '',
     },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .trim('Invalid first character')
-        .strict(true)
-        .min(3)
-        .matches(/^[a-zA-Z\s.]*$/, 'Invalid input character')
-        .max(30, 'Must be 30 characters or less')
-        .required('Field is Required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Field is Required'),
-      email_confirmation: Yup.string()
-        .oneOf([Yup.ref('email'), null], 'Email must match')
-        .required('Field is required'),
-    }),
+    validationSchema: passValidationSchema,
     onSubmit: (values, { resetForm }) => {
       setLoading(true)
       passApi
@@ -70,7 +56,7 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
               {...formik.getFieldProps('name')}
             />
             {formik.touched.name && formik.errors.name ? (
-              <div className='text-danger'>{formik.errors.name}</div>
+              <span className='d-inline-block mt-1 text-danger'>{formik.errors.name}</span>
             ) : null}
           </Form.Group>
           <Form.Group controlId='email'>
@@ -81,7 +67,7 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
               {...formik.getFieldProps('email')}
             />
             {formik.touched.email && formik.errors.email ? (
-              <div className='text-danger'>{formik.errors.email}</div>
+              <span className='d-inline-block mt-1 text-danger'>{formik.errors.email}</span>
             ) : null}
           </Form.Group>
           <Form.Group controlId='email_confirmation'>
@@ -93,9 +79,9 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
             />
             {formik.touched.email_confirmation &&
             formik.errors.email_confirmation ? (
-              <div className='text-danger'>
+              <span className='d-inline-block mt-1 text-danger'>
                 {formik.errors.email_confirmation}
-              </div>
+              </span>
             ) : null}
           </Form.Group>
           {Object.keys(apiErrors).length > 0 ? (
