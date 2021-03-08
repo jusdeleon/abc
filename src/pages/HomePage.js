@@ -7,19 +7,14 @@ const HomePage = () => {
   const [successModal, setSuccessModal] = useState(false)
 
   const handleShow = () => setShowModal(!showModal)
-  
-
   const handleSuccessModal = () => setSuccessModal(!successModal)
 
   return (
-    <div className='flex-grow-1 text-center px-4'>
-      <div
-        className='d-flex flex-column justify-content-center align-items-center'
-        style={{ minHeight: '70vh' }}
-      >
-        <h2>Lorem ipsum dolor sitamet,</h2>
+    <div className='d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center'>
+      <div className='p-4'>
+        <h2>Lorem ipsum dolor sitamet</h2>
         <h2>consecteur adipiscing</h2>
-        <h6>Get aboard now speak with us!</h6>
+        <p className='lead'>Get aboard now speak with us!</p>
         <Button
           type='button'
           variant='primary'
@@ -42,9 +37,8 @@ const HomePage = () => {
             centered
           >
             <Modal.Body className='text-center'>
-              <p>Thank you!</p>
-              <p>Please keep an eye for your first class ticket on you
-              email</p>
+              <p className='h4'>Thank you!</p>
+              <p className='lead'>Please keep an eye for your first class ticket on your email.</p>
               <Button
                 type='button'
                 variant='primary'

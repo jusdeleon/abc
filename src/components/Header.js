@@ -2,7 +2,7 @@ const Header = () => {
   return (
     <header className='bg-dark text-white'>
       <div className='ml-3 p-3'>
-        <h3>ABC Group</h3>
+        <h1 className='h3 mb-0'>ABC Group</h1>
       </div>
     </header>
   )
