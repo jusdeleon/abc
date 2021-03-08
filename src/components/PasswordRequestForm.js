@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Loader from './Loader'
 import { passApi } from '../api/api'
 
 const PasswordRequestForm = ({ showModal, handleShow }) => {
+  const [apiResponse, setApiResponse] = useState({})
+  const [loading, setLoading] = useState(false)
+
   const onHandleShow = () => handleShow()
 
   const formik = useFormik({
@@ -29,8 +33,12 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
         .required('Field is required'),
     }),
     onSubmit: (values) => {
-      passApi.post('/', values).then((res) => console.log(res.data.data))
-      handleShow()
+      setLoading(true)
+      passApi.post('/', values).then((res) => {
+        setApiResponse(res.data.data)
+        setLoading(false)
+        onHandleShow()
+      })
     },
   })
   return (
@@ -78,8 +86,19 @@ const PasswordRequestForm = ({ showModal, handleShow }) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type='submit' onClick={formik.handleSubmit} variant='primary'>
-            Submit
+          <Button
+            type='submit'
+            onClick={formik.handleSubmit}
+            variant='primary'
+            disabled={loading ? true : false}
+          >
+            {loading ? (
+              <>
+                <Loader /> Loading...
+              </>
+            ) : (
+              <span>Submit</span>
+            )}
           </Button>
         </Modal.Footer>
       </Modal>
