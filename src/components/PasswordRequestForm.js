@@ -11,6 +11,21 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
 
   const onHandleShow = () => handleShow()
 
+  const submitHandler = async (values, resetForm) => {
+    try {
+      setLoading(true)
+      await passApi.post('/', values)
+      setLoading(false)
+      onHandleShow()
+      handleSuccessModal()
+      resetForm()
+      setApiErrors({})
+    } catch (error) {
+      setLoading(false)
+      setApiErrors(error.response.data)
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -19,20 +34,7 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
     },
     validationSchema: passValidationSchema,
     onSubmit: (values, { resetForm }) => {
-      setLoading(true)
-      passApi
-        .post('/', values)
-        .then((res) => {
-          setLoading(false)
-          onHandleShow()
-          handleSuccessModal()
-          resetForm()
-          setApiErrors({})
-        })
-        .catch((error) => {
-          setLoading(false)
-          setApiErrors(error.response.data)
-        })
+      submitHandler(values, resetForm)
     },
   })
   return (
@@ -56,7 +58,9 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
               {...formik.getFieldProps('name')}
             />
             {formik.touched.name && formik.errors.name ? (
-              <span className='d-inline-block mt-1 text-danger'>{formik.errors.name}</span>
+              <span className='d-inline-block mt-1 text-danger'>
+                {formik.errors.name}
+              </span>
             ) : null}
           </Form.Group>
           <Form.Group controlId='email'>
@@ -67,7 +71,9 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
               {...formik.getFieldProps('email')}
             />
             {formik.touched.email && formik.errors.email ? (
-              <span className='d-inline-block mt-1 text-danger'>{formik.errors.email}</span>
+              <span className='d-inline-block mt-1 text-danger'>
+                {formik.errors.email}
+              </span>
             ) : null}
           </Form.Group>
           <Form.Group controlId='email_confirmation'>
