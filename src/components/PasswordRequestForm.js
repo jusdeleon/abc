@@ -14,7 +14,7 @@ const PasswordRequestForm = ({ showModal, handleShow, handleSuccessModal }) => {
   const submitHandler = async (values, resetForm) => {
     try {
       setLoading(true)
-      await passApi.post('/', values)
+      await passApi.post('', values)
       setLoading(false)
       onHandleShow()
       handleSuccessModal()
